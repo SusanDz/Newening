@@ -1,0 +1,173 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  
+  body{
+    overflow-x: hidden; /*prevents horizontal scrolling(applicable to the default web browser zoom level)*/
+    overflow-y: hidden; 
+    /* background-image: url('night.jpg'); */
+    /* background-color: black; */
+  }
+  
+  #container{
+    position: relative;
+  }
+  
+  .game{
+    position: relative;
+    /* background-color:black; */
+    background-image: url('night.jpg');  /*temporary game bg*/
+    background-size: 100%;
+  }
+  
+  
+  .hide {
+      display: none;
+  }
+  
+  
+  .santaVector{
+      background-image:url("santa.gif");
+      left:0; 
+      top:0;
+      position: absolute;
+      height:210px;
+      width:150px;
+      background-repeat: no-repeat;
+      background-size:contain;
+  }
+  
+  .giftDiv{
+    background-image:url("gift.png");
+    position: absolute;
+    height:100px;
+    width:80px;
+    background-size:100%;
+  }
+  
+  .crackerDiv{
+    background-image:url("https://f28wp-dubai-weblings.github.io/Game/client/media/icons/cone.png");
+    position: absolute;
+    height:110px;
+    width:100px;
+    background-size:100%;
+  }
+  
+  
+   .end{
+    position: relative;
+    margin: auto;
+    width: 50%;
+    border: 3px;
+    background-color: black;
+    color:white;
+    z-index: 1;
+    text-align: center;
+    padding: 15px;
+    cursor:pointer;
+    font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
+    letter-spacing: 5;
+    font-size: 20px;
+    word-spacing:3;
+    box-shadow: 0 5px 5px white;
+    animation: glow 3s ease-in-out infinite alternate;
+  
+  }
+  
+  
+  /* .scoreBoard
+  {
+    position: absolute;
+    background-size:contain;
+    left:40px;
+    top:40px;
+    line-height: 250px;
+    font-size: 20px;
+    height:50vh;
+    width:21%;
+    background-image:url("https://f28wp-dubai-weblings.github.io/Game/client/media/icons/scoreBoard.png");
+    background-repeat:no-repeat ;
+    text-align: center;
+    color:white;
+    font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
+    animation: glow 3s ease-in-out infinite alternate;
+  } */
+  
+  @keyframes glow{
+    from {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #d1abbe, 0 0 30px #a38896, 0 0 40px #dfb6ca, 0 0 50px #bb6c93, 0 0 60px #9e195c;
+      }
+      
+      to {
+        text-shadow: 0 0 9px #fff, 0 0 13px #ff4da6, 0 0 23px #ff4da6, 0 0 30px #ff4da6, 0 0 43px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6;
+      }
+  }
+
+  #deathMessage{
+    font-size: 40px;
+    color: white;
+    position: absolute;
+    top: 120px;
+    left: 430px;
+    font-family: "Lucida Console", Courier, monospace;
+  }
+  /* Style all input fields */
+input {
+  /* width: 100%; */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+}
+
+/* Style the submit button */
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Style the container for inputs */
+.container {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  margin-top: 10px;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 18px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10004;";
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+  content: "&#10006;";
+}
