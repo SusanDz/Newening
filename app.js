@@ -4,10 +4,13 @@ console.log("This is working");
 
 const express = require('express');
 var session = require('express-session');
-const favicon = require('serve-favicon');
 const app = express();
-const path = require('path');
-const cookie = require('cookie-parser');
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 //define a session
 app.use(session({
@@ -29,10 +32,14 @@ const io = require('socket.io')(server);
 
 //send the static file
 //make a route for homepage
-app.use(express.static('client'));
+app.use(express.static('./views'));
 app.get('/', (req, res) => {
-    res.sendFile('index.html', { root: __dirname });
+    res.sendFile('./views/login.html', { root: __dirname });
 });
+
+//use morgan middleware
+const morgan = require("morgan");
+app.use(morgan('dev'));
 
 // middleware
 app.use(express.json());

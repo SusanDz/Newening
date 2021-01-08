@@ -11,6 +11,23 @@ var pool = mysql.createPool({
 });
 // //for when the server disconnects
 // pool.query('select 1 + 1', (err, rows) => { /* */ });
+// pool.query('SELECT 1 + 1', function(err, rows) {
+//     if (err) throw err;
+  
+//     console.log('The solution is: ', rows[0].solution);
+//   });try this laterrrrrrrrrrrr
+
+// Attempt to catch disconnects 
+pool.on('connection', function(connection) {
+    console.log('Connection established');
+    // Below never get called
+    connection.on('error', function(err) {
+        console.error(new Date(), 'MySQL error', err.code);
+    });
+    connection.on('close', function(err) {
+        console.error(new Date(), 'MySQL close', err);
+    });
+});
 
 function executeQuery(query, callback) {
     pool.getConnection(function(err, connection) {
@@ -52,31 +69,20 @@ function find(callback) {
     });
 }
 
-function findRows(callback) {
-    const selectUsers = "SELECT COUNT(score) from database.users; ";//database.user
-    getResult(selectUsers, function(err, rows) {
-        if (!err) {
-            callback(null, rows);
-        } else {
-            console.log(err);
-        }
-    });
-}
-
-function findScore(callback) {
-    const selectUsers = "SELECT score FROM database.users; ";//score
-    getResult(selectUsers, function(err, rows) {
-        if (!err) {
-            callback(null, rows);
-        } else {
-            console.log(err);
-        }
-    });
-}
-
 function findByUsername(username, callback) {
     const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);//where like
     getResult(selectUser, function(err, result) {
+        if (!err) {
+            callback(null, result);
+        } else {
+            console.log(err);
+        }
+    });
+}
+
+function findByUsernameLeader(username, callback) {
+    const selectUser = (SQL `SELECT * from leaderboard where username like ${username};`);
+    getResult(selectUser, function(err, rows) {
         if (!err) {
             callback(null, rows);
         } else {
@@ -98,7 +104,7 @@ function findById(id, callback) {
 
 function createUser(name, pass, callback) {//score
     console.log('CREATE USER ; ' + name + ', ' + pass) //score
-    const insertUser = (SQL `INSERT INTO database.users (name, pass, score) VALUES (${name}, ${pass}, 0) ;`);//score
+    const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);//score
     getResult(insertUser, function(err, result) {
         if (!err) {
             callback(null, result.affectedRows, result.insertId);
@@ -120,13 +126,71 @@ function deleteUser(name, callback) {
     });
 }
 
+function updateScore(username, score, callback) {
+    const insertScore = (SQL `UPDATE leaderboard SET score=(${score}) WHERE username like ${username} ;`);
+    getResult(insertScore, function(err, result) {
+        if (!err) {
+            callback(null, result);
+        } else {
+            console.log(err);
+        }
+    });
+}
+
+function checkPass(username, password, callback) {
+    const selectUser = (SQL `SELECT * from database where username like ${username};`);
+    getResult(selectUser, function(err, rows) {
+        if (!err) {
+            if (rows.length != 0) {
+                console.log(rows[0].iv.length);
+                if (rows[0].password === password) {
+                    callback(null, rows);
+                } else {
+                    callback(false, rows);
+                }
+
+            } else {
+                callback(false, rows);//numberrrrrrssss
+            }
+
+        } else {
+            console.log(err);
+        }
+    });
+}
+
+function createScore(username, score, callback) {
+    const insertScore = (SQL `INSERT INTO leaderboard (username, score) VALUES (${username}, ${score}) ;`);
+    getResult(insertScore, function(err, result) {
+        if (!err) {
+            callback(null, result);
+        } else {
+            console.log(err);
+        }
+    });
+}
+
+
+function displayscores(callback) {
+    const selectPlayer = (SQL `SELECT username,score FROM leaderboard ORDER BY score DESC LIMIT 5;`);
+    getResult(selectPlayer, function(err, rows) {
+        if (!err) {
+            callback(null, rows);
+        } else {
+            console.log(err);
+        }
+    });
+}
 
 module.exports = {
     find,
     findByUsername,
+    findByUsernameLeader,
     findById,
     createUser,
     deleteUser,
-    findScore,
-    findRows
+    updateScore,
+    checkPass,
+    createScore,
+    displayscores
 };

@@ -25,7 +25,7 @@ function initDB(){
         "`id` int(11) NOT NULL auto_increment," +
         "`name` varchar(32) NOT NULL default 'Unknown'," +
         "`pass` varchar(32) NOT NULL," +
-        "`score` int," +
+        // "`score` int," +
         "PRIMARY KEY (`id`)" +
         "); ";
         
@@ -35,15 +35,16 @@ function initDB(){
         });  
         
          //create table Sessions
-        const sqlSession = "Create table if not exists `database`.`sessions` (" +
+        const sqlLeader = "Create table if not exists `database`.`leaderboard` (" +
         "`id` int(11) NOT NULL auto_increment," +
-        "`startDate` DATETIME DEFAULT CURRENT_TIMESTAMP," +
+        "`name` varchar(32) NOT NULL default 'Unknown'," +
+        "`score` int," +
         "PRIMARY KEY(`id`)" +
         ");";
   
-        connection.query(sqlSession, function(err, result) {
+        connection.query(sqlLeader, function(err, result) {
         if (err) throw err;
-        console.log("Sessions table created");
+        console.log("Leaderboard table created");
        }); 
         
     });

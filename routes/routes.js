@@ -12,11 +12,11 @@ router.post('/api/register', usercontrol.registerCtrl);
 //create a route for /api/login
 router.post('/api/login', usercontrol.loginCtrl);
 
-//create a route for /api/scoreboard
-router.post('/api/scoreboard', usercontrol.getScores);
+//create a route for /api/leaderboard
+router.post('/api/leaderboard', usercontrol.leaderScoreCtrl);
 
-//create a route for /api/rows
-router.post('/api/rows', usercontrol.getRows);
+//create a route for /api/leaderboardUpdate
+router.post('/api/leaderboardUpdate', usercontrol.leaderCtrl);
 
 //export router
 module.exports = router;
