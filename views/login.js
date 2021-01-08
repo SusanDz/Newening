@@ -10,7 +10,7 @@ function init() {
               //allow access to game using dollar get index html 
                 console.log(result);
               //request.session.username = username;
-                // location.replace("index.html");
+                location.replace("play.html");
             })
             .fail(function() {
                 console.log("error with registration");
@@ -32,7 +32,7 @@ function init() {
              // if(request.session.username){
             //   if(sessionName){
                 //   response.redirect("index.html");
-                //   location.replace("register.html");
+                  location.replace("play.html");
             //   }
   
             })

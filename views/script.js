@@ -3,19 +3,19 @@ var myBackground;
 var myObstacles = [];
 var myBonus = [];
 var score  = parseInt(localStorage['score'] || '0', 10);
-const startBoard = document.querySelector(".btn-grp button");
+// const startBoard = document.querySelector(".btn-grp button");
 const retry = document.querySelector(".retry button");
 const end = document.querySelector(".end");
 end.style.display = "none";//dont show death
 retry.style.display = "none";
-startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
+// startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
 
 function startGame() {
     myGamePiece = new component(120, 210, "santa.png", 604, 450, "image");
     myBackground = new component(1366, 657, "night.jpg", 0, 0, "image");
     myGameArea.start();
-    document.querySelector(".btn-grp button").style.visibility = 'hidden';
-    document.querySelector("#heading").style.visibility = 'hidden';//once game loads hide the button and the heading initially
+    // document.querySelector(".btn-grp button").style.visibility = 'hidden';
+    // document.querySelector("#heading").style.visibility = 'hidden';//once game loads hide the button and the heading initially
 }
 
 var myGameArea = {

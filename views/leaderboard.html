@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" type="text/css" href="leaderboard.css" media="all" /> -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital@1&display=swap" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="leaderboard.js"></script>
+    <script src="cookies.js"></script>
+</head>
+
+<body onload="init();">
+    <div class="leaderboard">
+        <h1>LEADERBOARD:</h1>
+
+        <table class="styled-table" id="leaderboardtable">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="0user"></td>
+                    <td id="0score"></td>
+                </tr>
+                <tr>
+                    <td id="1user"></td>
+                    <td id="1score"></td>
+                </tr>
+                <tr>
+                    <td id="2user"></td>
+                    <td id="2score"></td>
+                </tr>
+                <tr>
+                    <td id="3user"></td>
+                    <td id="3score"></td>
+                </tr>
+                <tr>
+                    <td id="4user"></td>
+                    <td id="4score"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

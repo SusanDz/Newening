@@ -138,20 +138,20 @@ function updateScore(username, score, callback) {
 }
 
 function checkPass(username, password, callback) {
-    const selectUser = (SQL `SELECT * from database where username like ${username};`);
+    const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, rows) {
         if (!err) {
-            if (rows.length != 0) {
-                console.log(rows[0].iv.length);
+            // if (rows.length != 0) {
+                // console.log(rows[0].iv.length);
                 if (rows[0].password === password) {
                     callback(null, rows);
                 } else {
                     callback(false, rows);
                 }
 
-            } else {
-                callback(false, rows);//numberrrrrrssss
-            }
+            // } else {
+                // callback(false, rows);//numberrrrrrssss
+            // }
 
         } else {
             console.log(err);
@@ -160,7 +160,7 @@ function checkPass(username, password, callback) {
 }
 
 function createScore(username, score, callback) {
-    const insertScore = (SQL `INSERT INTO leaderboard (username, score) VALUES (${username}, ${score}) ;`);
+    const insertScore = (SQL `INSERT INTO leaderboard (name, score) VALUES (${username}, ${score}) ;`);
     getResult(insertScore, function(err, result) {
         if (!err) {
             callback(null, result);
@@ -172,7 +172,7 @@ function createScore(username, score, callback) {
 
 
 function displayscores(callback) {
-    const selectPlayer = (SQL `SELECT username,score FROM leaderboard ORDER BY score DESC LIMIT 5;`);
+    const selectPlayer = (SQL `SELECT name,score FROM leaderboard ORDER BY score DESC LIMIT 5;`);
     getResult(selectPlayer, function(err, rows) {
         if (!err) {
             callback(null, rows);

@@ -34,7 +34,7 @@ const io = require('socket.io')(server);
 //make a route for homepage
 app.use(express.static('./views'));
 app.get('/', (req, res) => {
-    res.sendFile('./views/login.html', { root: __dirname });
+    res.sendFile('./views/index.html', { root: __dirname });
 });
 
 //use morgan middleware
