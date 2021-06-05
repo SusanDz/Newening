@@ -24,7 +24,7 @@ const loginService = (username, password, callback) => {
 
 const registerService = (username, password, callback) => {
     playerdb.findByUsername(username, function(err, rowsuser) {
-        if (rowsuser.length != 0) {
+        if (rowsuser != 0) {
             //already in db
             console.log("this username is already taken");
             callback(false, null);

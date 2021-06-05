@@ -73,7 +73,14 @@ function findByUsername(username, callback) {
     const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);//where like
     getResult(selectUser, function(err, result) {
         if (!err) {
-            callback(null, result);
+            //User already exists
+            if (result.length != 0) {
+                if (result[0].name === username) {
+                    callback(true, result);
+                }
+            } else {
+                callback(false, 0);
+            }
         } else {
             console.log(err);
         }

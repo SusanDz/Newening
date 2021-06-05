@@ -9,8 +9,16 @@ function init() {
             $.post('/api/register', user, function(result) {
               //allow access to game using dollar get index html 
                 console.log(result);
+                $("#wrongpass h2").html("Username already Exists");
+                if(result == null) {
+                    document.getElementById("wrongpass").style.display = "block";
+                }
+                if(result != null) {
+                    document.getElementById("wrongpass").style.display = "none";
+                    location.replace("play.html");
+                }
               //request.session.username = username;
-                location.replace("play.html");
+                // location.replace("play.html");
             })
             .fail(function() {
                 console.log("error with registration");
@@ -26,13 +34,20 @@ function init() {
             $.post('/api/login', user, function(result) { 
                 console.log(result);
                 console.log('Welcome back', name);
+                if(result == null) {
+                    document.getElementById("wrongpass").style.display = "block";
+                }
+                if(result != null) {
+                    document.getElementById("wrongpass").style.display = "none";
+                    location.replace("play.html");
+                }
               //login correct show the game page here using $.get
               //request.session.username = name;
             //   console.log("value from regis:", sessionName);
              // if(request.session.username){
             //   if(sessionName){
                 //   response.redirect("index.html");
-                  location.replace("play.html");
+                //   location.replace("play.html");
             //   }
   
             })
