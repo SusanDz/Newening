@@ -9,9 +9,11 @@ const loginServices = require('../services/userServices');
         if (user === null) {
             console.log("Authentication problem!");
             response.json(null);
-            location.reload();//if name is not given to us
+            // location.reload();//if name is not given to us
+            //add shiz for wrong pass
         } else {
             //here you have to add the user to the session
+            console.log("UserControl = user:", user);
             response.json(user);
             // sessionName = request.session.username;
             // request.session.username = name;

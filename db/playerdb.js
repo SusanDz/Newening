@@ -51,7 +51,7 @@ function executeQuery(query, callback) {
 function getResult(query, callback) {
     executeQuery(query, function(err, rows) {
         if (!err) {
-            callback(null, rows);
+            callback(null, rows);//[0].password);
         } else {
             callback(true, err);
         }
@@ -81,7 +81,7 @@ function findByUsername(username, callback) {
 }
 
 function findByUsernameLeader(username, callback) {
-    const selectUser = (SQL `SELECT * from leaderboard where username like ${username};`);
+    const selectUser = (SQL `SELECT * from database.leaderboard where username like ${username};`);
     getResult(selectUser, function(err, rows) {
         if (!err) {
             callback(null, rows);
@@ -127,7 +127,7 @@ function deleteUser(name, callback) {
 }
 
 function updateScore(username, score, callback) {
-    const insertScore = (SQL `UPDATE leaderboard SET score=(${score}) WHERE username like ${username} ;`);
+    const insertScore = (SQL `UPDATE database.leaderboard SET score=(${score}) WHERE username like ${username} ;`);
     getResult(insertScore, function(err, result) {
         if (!err) {
             callback(null, result);
@@ -141,17 +141,17 @@ function checkPass(username, password, callback) {
     const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, rows) {
         if (!err) {
-            // if (rows.length != 0) {
+            if (rows.length != 0) {
                 // console.log(rows[0].iv.length);
-                if (rows[0].password === password) {
+                if (rows[0].pass === password) {
                     callback(null, rows);
                 } else {
-                    callback(false, rows);
+                    callback(false, 0);
                 }
 
-            // } else {
-                // callback(false, rows);//numberrrrrrssss
-            // }
+            } else {
+                callback(false, rows);//numberrrrrrssss
+            }
 
         } else {
             console.log(err);
@@ -160,7 +160,7 @@ function checkPass(username, password, callback) {
 }
 
 function createScore(username, score, callback) {
-    const insertScore = (SQL `INSERT INTO leaderboard (name, score) VALUES (${username}, ${score}) ;`);
+    const insertScore = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${username}, ${score}) ;`);
     getResult(insertScore, function(err, result) {
         if (!err) {
             callback(null, result);
@@ -172,7 +172,7 @@ function createScore(username, score, callback) {
 
 
 function displayscores(callback) {
-    const selectPlayer = (SQL `SELECT name,score FROM leaderboard ORDER BY score DESC LIMIT 5;`);
+    const selectPlayer = (SQL `SELECT name,score FROM database.leaderboard ORDER BY score DESC LIMIT 5;`);
     getResult(selectPlayer, function(err, rows) {
         if (!err) {
             callback(null, rows);
