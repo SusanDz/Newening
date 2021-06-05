@@ -119,10 +119,18 @@ function createUser(name, pass, callback) {//score
             console.log(err);
         }
     });
+    const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);//score
+    getResult(insertUser, function(err, result) {
+        if (!err) {
+            callback(null, result.affectedRows, result.insertId);
+        } else {
+            console.log(err);
+        }
+    });
 }
 
 function deleteUser(name, callback) {
-    const insertUser = (SQL `DELETE from database.users where username = ${name};`);
+    const insertUser = (SQL `DELETE from database.users where name = ${name};`);
     getResult(selectUser, function(err, result) {
         if (!err) {
             console.log("Number of users inserted: " + result.affectedRows);
@@ -134,7 +142,7 @@ function deleteUser(name, callback) {
 }
 
 function updateScore(username, score, callback) {
-    const insertScore = (SQL `UPDATE database.leaderboard SET score=(${score}) WHERE username like ${username} ;`);
+    const insertScore = (SQL `UPDATE database.leaderboard SET score=(${score}) WHERE name LIKE ${username} ;`);
     getResult(insertScore, function(err, result) {
         if (!err) {
             callback(null, result);
@@ -148,18 +156,17 @@ function checkPass(username, password, callback) {
     const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, rows) {
         if (!err) {
+            //User exists
             if (rows.length != 0) {
-                // console.log(rows[0].iv.length);
+                // pass is correct
                 if (rows[0].pass === password) {
                     callback(null, rows);
                 } else {
                     callback(false, 0);
                 }
-
             } else {
-                callback(false, rows);//numberrrrrrssss
+                callback(false, null);//numberrrrrrssss
             }
-
         } else {
             console.log(err);
         }
