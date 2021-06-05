@@ -9,9 +9,13 @@ const loginService = (username, password, callback) => {
             //the user is not in the DB
             console.log("no  user found with this name");
             callback(true, null);
-        } else {
-            console.log(`Selected user; ${rows[0].id}, ${rows[0].username}, ${rows[0].password} `);
-            user = {id:rows[0].id, username:rows[0].username, password:rows[0].password};
+        } 
+        else if(rows == 0) {
+            console.log("password is wrong lolll");
+            callback(true, null);
+        }else {
+            console.log(`Selected user; ${rows[0].id}, ${rows[0].name}, ${rows[0].pass} `);
+            user = {id:rows[0].id, username:rows[0].name, password:rows[0].pass};
             
             callback(null, user);
         }
@@ -33,7 +37,8 @@ const registerService = (username, password, callback) => {
                     callback(true, null);
                 } else {
                     console.log(`User has been inserted id= ${id}`);
-                    user = {id:id, username:username, password:password, score:0};
+                    // user = {id:id, username:username, password:password, score:0};
+                    user = new User(id, username, password);
                     callback(null, user);
                 }
             });
@@ -43,7 +48,7 @@ const registerService = (username, password, callback) => {
 
 const newLeaderService = (username, score, callback) => {
     console.log("already in");
-    playerdb.findByUsernameLeader(username, function(err, result) {
+    playerdb.findByUsername(username, function(err, result) {
         playerdb.createScore(username, score, function(err, result) {
             if (result.length != 0) {
                 score = new Score(username, score);
