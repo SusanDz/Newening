@@ -36,8 +36,10 @@ function init() {
                 console.log('Welcome back', name);
                 if(result == null) {
                     document.getElementById("wrongpass").style.display = "block";
-                }
-                if(result != null) {
+                } else if(result == 0) {
+                    $("#wrongpass h2").html("Username doesn't Exist");
+                    document.getElementById("wrongpass").style.display = "block";
+                } else {
                     document.getElementById("wrongpass").style.display = "none";
                     location.replace("play.html");
                 }

@@ -5,10 +5,10 @@ const { Score } = require('../models/objects');
 const loginService = (username, password, callback) => {
     //check if the user is in the DB
     playerdb.checkPass(username, password, function(err, rows) {
-        if (rows.length == 0) {
+        if (rows === null) {
             //the user is not in the DB
             console.log("no  user found with this name");
-            callback(true, null);
+            callback(true, 0);
         } 
         else if(rows == 0) {
             console.log("password is wrong lolll");

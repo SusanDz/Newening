@@ -10,7 +10,8 @@ const loginServices = require('../services/userServices');
             console.log("Authentication problem!");
             response.json(null);
             // location.reload();//if name is not given to us
-            //add shiz for wrong pass
+        } else if(user === 0) {
+            response.json(0);
         } else {
             //here you have to add the user to the session
             console.log("UserControl = user:", user);
