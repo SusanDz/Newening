@@ -99,18 +99,15 @@ function updateGameArea() {
             //retry.style.display="block";
             //retry.addEventListener('click',startGame);//function(){location.reload()}
             myGameArea.stop();
-            $.post('/api/leaderboardUpdate', player, function(result) { 
+            var play = {username:player, score:score };
+            //another post api for checking if current score is greater than score stored
+            $.post('/api/leaderboardUpdate', play, function(result) { 
                 console.log(result);
-                if(result == null) {
-                    document.getElementById("wrongpass").style.display = "block";
-                } else if(result == 0) {
-                    $("#wrongpass h2").html("Username doesn't Exist");
-                    document.getElementById("wrongpass").style.display = "block";
-                } else {
-                    document.getElementById("wrongpass").style.display = "none";
-                    localStorage.setItem("Player", name);
-                    location.replace("play.html");
-                }
+                // location.reload();
+                // do retry button here
+                retry.style.display="block";
+                retry.style.top="100px";
+                retry.addEventListener('click',startGame);//function(){location.reload()}
             })
             return;
         } 
@@ -153,11 +150,11 @@ function updateGameArea() {
     }
 }
 
-for (i = 0; i < myObstacles.length; i += 1) {
-    if (myGamePiece.crashWith(myObstacles[i])){
-        end.style.display="block";
-    }
-}
+// for (i = 0; i < myObstacles.length; i += 1) {
+//     if (myGamePiece.crashWith(myObstacles[i])){
+//         end.style.display="block";
+//     }
+// }
 
 function advance(){
     if((score>20)&&(score<=40)){

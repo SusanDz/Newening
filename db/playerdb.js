@@ -113,7 +113,7 @@ function createUser(name, pass, callback) {//score
     console.log('CREATE USER ; ' + name + ', ' + pass) //score
     const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);//score
     getResult(insertBoard);
-    
+
     const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);//score
     getResult(insertUser, function(err, result) {
         if (!err) {
@@ -168,9 +168,9 @@ function checkPass(username, password, callback) {
     });
 }
 
-function createScore(username, score, callback) {
-    const insertScore = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${username}, ${score}) ;`);
-    getResult(insertScore, function(err, result) {
+function updateScore(username, score, callback) {
+    const updateScore = (SQL `UPDATE database.leaderboard SET score = ${score} WHERE name = ${username} ;`);
+    getResult(updateScore, function(err, result) {
         if (!err) {
             callback(null, result);
         } else {
@@ -200,6 +200,6 @@ module.exports = {
     deleteUser,
     updateScore,
     checkPass,
-    createScore,
+    updateScore,
     displayscores
 };

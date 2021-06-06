@@ -46,15 +46,19 @@ const registerService = (username, password, callback) => {
     });
 };
 
-const newLeaderService = (username, score, callback) => {
+const updateLeaderService = (username, score, callback) => {
     console.log("already in");
     playerdb.findByUsername(username, function(err, result) {
-        playerdb.createScore(username, score, function(err, result) {
+        if (result.length == 0) {
+            console.log("User doesn't exist in the database");
+            callback(false, 0);
+        }
+        playerdb.updateScore(username, score, function(err, result) {
             if (result.length != 0) {
-                score = new Score(username, score);
-                callback(null, result);//numbers
+                scores = new Score(username, score);
+                callback(null, scores);//numbers
             } else {
-                callback(true, result);
+                callback(true, null);
             }
         });
     });
@@ -110,7 +114,7 @@ module.exports = {
     registerService,
     searchService,
     searchIDService,
-    newLeaderService,
+    updateLeaderService,
     deleteService,
     scoreService
 };

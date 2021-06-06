@@ -55,10 +55,11 @@ const getUsers = (request, response) => {
 };
 
 const leaderCtrl = (request, response) => {//get the scores
+    const loginServices = require('../services/userServices');
     let username = request.body.username;
     let score = request.body.score;
-    const loginServices = require('../services/userServices');
-    loginServices.newLeaderService(username, score, function(err, rows) {
+
+    loginServices.updateLeaderService(username, score, function(err, rows) {
         response.json(rows);
         response.end();
     });
