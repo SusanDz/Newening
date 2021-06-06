@@ -21,6 +21,7 @@ function init() {
                     }
                     if(result != null) {
                         document.getElementById("wrongpass").style.display = "none";
+                        localStorage.setItem("Player", name);
                         location.replace("play.html");
                     }
                     //request.session.username = username;
@@ -51,6 +52,7 @@ function init() {
                     document.getElementById("wrongpass").style.display = "block";
                 } else {
                     document.getElementById("wrongpass").style.display = "none";
+                    localStorage.setItem("Player", name);
                     location.replace("play.html");
                 }
               //login correct show the game page here using $.get

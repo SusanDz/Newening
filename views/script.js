@@ -9,6 +9,8 @@ const end = document.querySelector(".end");
 end.style.display = "none";//dont show death
 retry.style.display = "none";
 // startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
+var player = localStorage.getItem("Player");
+console.log("Hi ", player);
 
 function startGame() {
     myGamePiece = new component(120, 210, "santa.png", 604, 450, "image");
@@ -97,6 +99,19 @@ function updateGameArea() {
             //retry.style.display="block";
             //retry.addEventListener('click',startGame);//function(){location.reload()}
             myGameArea.stop();
+            $.post('/api/leaderboardUpdate', player, function(result) { 
+                console.log(result);
+                if(result == null) {
+                    document.getElementById("wrongpass").style.display = "block";
+                } else if(result == 0) {
+                    $("#wrongpass h2").html("Username doesn't Exist");
+                    document.getElementById("wrongpass").style.display = "block";
+                } else {
+                    document.getElementById("wrongpass").style.display = "none";
+                    localStorage.setItem("Player", name);
+                    location.replace("play.html");
+                }
+            })
             return;
         } 
     }
