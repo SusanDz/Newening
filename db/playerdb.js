@@ -111,15 +111,10 @@ function findById(id, callback) {
 
 function createUser(name, pass, callback) {//score
     console.log('CREATE USER ; ' + name + ', ' + pass) //score
-    const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);//score
-    getResult(insertUser, function(err, result) {
-        if (!err) {
-            callback(null, result.affectedRows, result.insertId);
-        } else {
-            console.log(err);
-        }
-    });
     const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);//score
+    getResult(insertBoard);
+    
+    const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);//score
     getResult(insertUser, function(err, result) {
         if (!err) {
             callback(null, result.affectedRows, result.insertId);
