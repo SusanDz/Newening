@@ -3,27 +3,37 @@ function init() {
         $("#register").click(function(e) {
             var name =$("#username").val();
             var pass =$("#password").val();
+            var upperCaseLetters = /[A-Z]/g;
+            var lowerCaseLetters = /[a-z]/g;
+            var numbers = /[0-9]/g;
+
             var user = {username:name, password:pass };//username is attribute
             console.log(name + "'" + pass);
             console.log("meow");
-            $.post('/api/register', user, function(result) {
-              //allow access to game using dollar get index html 
-                console.log(result);
-                $("#wrongpass h2").html("Username already Exists");
-                if(result == null) {
-                    document.getElementById("wrongpass").style.display = "block";
-                }
-                if(result != null) {
-                    document.getElementById("wrongpass").style.display = "none";
-                    location.replace("play.html");
-                }
-              //request.session.username = username;
-                // location.replace("play.html");
-            })
-            .fail(function() {
-                console.log("error with registration");
-                // location.replace("index.html");
-            });
+            
+            if(pass.match(upperCaseLetters) && pass.match(lowerCaseLetters) && pass.match(numbers) && pass.length>=8) {
+                $.post('/api/register', user, function(result) {
+                    //allow access to game using dollar get index html 
+                    console.log(result);
+                    $("#wrongpass h2").html("Username already Exists");
+                    if(result == null) {
+                        document.getElementById("wrongpass").style.display = "block";
+                    }
+                    if(result != null) {
+                        document.getElementById("wrongpass").style.display = "none";
+                        location.replace("play.html");
+                    }
+                    //request.session.username = username;
+                    // location.replace("play.html");
+                })
+                .fail(function() {
+                    console.log("error with registration");
+                 // location.replace("index.html");
+                });
+            } else {
+                $("#wrongpass h2").html("Password doesn't follow the Guidelines");
+                document.getElementById("wrongpass").style.display = "block";
+            }
 
         }),
         $("#login").click(function(e) {
