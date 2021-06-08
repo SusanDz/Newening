@@ -168,6 +168,22 @@ function checkPass(username, password, callback) {
     });
 }
 
+function getScore(username, callback) {
+    const selectUser = (SQL `SELECT * from database.leaderboard WHERE name LIKE ${username};`);
+    getResult(selectUser, function(err, rows) {
+        if (!err) {
+            //User exists
+            if (rows.length != 0) {
+                callback(null, rows);
+            } else {
+                callback(false, null);//numberrrrrrssss
+            }
+        } else {
+            console.log(err);
+        }
+    });
+}
+
 function updateScore(username, score, callback) {
     const updateScore = (SQL `UPDATE database.leaderboard SET score = ${score} WHERE name = ${username} ;`);
     getResult(updateScore, function(err, result) {
@@ -200,6 +216,7 @@ module.exports = {
     deleteUser,
     updateScore,
     checkPass,
+    getScore,
     updateScore,
     displayscores
 };
