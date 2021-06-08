@@ -1,18 +1,18 @@
 function init() {
     $(document).ready(function() {
-        if (getCookie("score") != "") {
-            var username = getCookie("username");
-            var score = getCookie("score");
-            setCookie("score", "", 30);
-            var userScore = { username: username, score: score };
-            $.post('/api/leaderboardUpdate', userScore, function(resultUpd) {})
-        }
+        // if (getCookie("score") != "") {
+        //     var username = getCookie("username");
+        //     var score = getCookie("score");
+        //     setCookie("score", "", 30);
+        //     var userScore = { username: username, score: score };
+        //     $.post('/api/leaderboardUpdate', userScore, function(resultUpd) {})
+        // }
         setTimeout(function() {
             $.post('/api/leaderboard', function(result) {
                     // console.log(result[0]);
                     var i = 0;
                     while (i < result.length) {
-                        $("#" + i + "user").html(result[i].username);
+                        $("#" + i + "user").html(result[i].name);
                         $("#" + i + "score").html(result[i].score);
                         i++;
                     }
