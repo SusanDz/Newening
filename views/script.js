@@ -101,13 +101,18 @@ function updateGameArea() {
             myGameArea.stop();
             var play = {username:player, score:score };
             //another post api for checking if current score is greater than score stored
-            $.post('/api/leaderboardUpdate', play, function(result) { 
+            $.post('/api/getScore', play, function(result) {
                 console.log(result);
-                // location.reload();
-                // do retry button here
-                retry.style.display="block";
-                retry.style.top="100px";
-                retry.addEventListener('click',startGame);//function(){location.reload()}
+
+                if(result != null){
+                    $.post('/api/leaderboardUpdate', play, function(result) { 
+                        console.log(result);
+                        // do retry button here
+                        retry.style.display="block";
+                        retry.style.top="100px";
+                        retry.addEventListener('click',startGame);//function(){location.reload()}
+                    })
+                }
             })
             return;
         } 
