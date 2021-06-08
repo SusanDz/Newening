@@ -67,21 +67,27 @@ const leaderCtrl = (request, response) => {//get the scores
 
 const leaderScoreCtrl = (request, response) => {//get the no. of rows
     const loginServices = require('../services/userServices');
-    loginServices.scoreService(function(err, rows) {
+    loginServices.displayService(function(err, rows) {
         response.json(rows);
         response.end();
     });
 };
 
-// const getUserByUsername = (request, response) => {
-//     const loginServices = require('../services/userServices');
-//     let id = request.params.username;
-//     loginServices.searchUsernameService(username, function(err, rows) {
-//         response.json(rows);
-//         response.end();
-//     });
-// };
+const score = (request, response) => {//get the no. of rows
+    const scoreServices = require('../services/userServices');
+    let username = request.body.username;
+    let score = request.body.score;
 
+    scoreServices.getScoreService(username, score, function(err, rows) {
+        if (rows === null) {
+            console.log("Their curent score is Greater than what they just got!");
+            response.json(null);
+        } else {
+            response.json(rows);
+        }
+        response.end();
+    });
+};
 
 const getUserByID = (request, response) => {
     const loginServices = require('../services/userServices');
@@ -99,5 +105,6 @@ module.exports = {
     getUsers,
     getUserByID,
     leaderCtrl,
-    leaderScoreCtrl
+    leaderScoreCtrl,
+    score
 };
