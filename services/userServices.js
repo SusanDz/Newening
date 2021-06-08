@@ -64,7 +64,7 @@ const updateLeaderService = (username, score, callback) => {
     });
 };
 
-const scoreService = (callback) => {
+const displayService = (callback) => {
     playerdb.displayscores(function(err, scoreData) {
         if (scoreData.rows != 0) {
             callback(null, scoreData);
@@ -98,6 +98,27 @@ const searchIDService = function(id, callback) {
     });
 };
 
+const getScoreService = (username, score, callback) => {
+    console.log("already in");
+    playerdb.findByUsername(username, function(err, result) {
+        if (result.length == 0) {
+            console.log("User doesn't exist in the database");
+            callback(false, 0);
+        }
+        playerdb.getScore(username, function(err, result) {
+            if (result.length != 0) {
+                if(result[0].score < score) {
+                    callback(null, result);
+                } else {
+                    callback(false, null);
+                }
+            } else {
+                callback(true, null);
+            }
+        });
+    });
+};
+
 const deleteService = function(id, callback) {
     let count = playerdb.deleteUser(id, function(err, count) {
         if (count === 0) { //unkown
@@ -116,5 +137,6 @@ module.exports = {
     searchIDService,
     updateLeaderService,
     deleteService,
-    scoreService
+    displayService,
+    getScoreService
 };
