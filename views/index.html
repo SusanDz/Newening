@@ -11,20 +11,23 @@
         <h2>Newening</h2>
     </div>
     <div class= "btn-grp">
-        <button><a href="login.html">PLAY</a></button>
+        <button id="b1" onclick="myFunction()">PLAY</button>
         <button><a href="leaderboard.html">LEADERBOARD</a></button>
     </div>
-    <!-- <div class = "retry"> 
-        <button>Retry</button>
-    </div>
-    <div class = "end"> 
-        OH NO!<br>
-        YOU HIT A CRACKER<br>
-        GAME OVER
-    </div>
-    <div class = "practiceScreen">
-        <div class ="scoreBoard"></div>
-        <script src = "script.js"> </script> 
-    </div> -->
+    <script>
+        var player = sessionStorage.getItem("Player");
+        var play = document.getElementById("b1");
+        console.log("Player: ",sessionStorage.getItem("Player"));
+        function myFunction() {
+            if(player === null){
+                // play.addEventListener('click',location.href='play.html');
+                play.addEventListener('click',location.href='login.html');
+            } else {
+                // play.addEventListener('click',location.href='login.html');
+                play.addEventListener('click',location.href='play.html');
+                // console.log("HELLOOOO!!!")
+            }
+        }
+    </script>
 </body>
 </html>

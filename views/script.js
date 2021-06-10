@@ -9,7 +9,7 @@ const end = document.querySelector(".end");
 end.style.display = "none";//dont show death
 retry.style.display = "none";
 // startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
-var player = localStorage.getItem("Player");
+var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
 
 function startGame() {
