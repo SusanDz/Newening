@@ -23,7 +23,7 @@ function init() {
                     console.log("error loading user");
                 });
 
-        }, 2000)
+        }, 2)
 
     })
 
