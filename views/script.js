@@ -4,7 +4,7 @@ var myObstacles = [];
 var myBonus = [];
 var score  = parseInt(localStorage['score'] || '0', 10);
 // const startBoard = document.querySelector(".btn-grp button");
-const retry = document.querySelector(".retry button");
+const retry = document.querySelector(".retry");
 const end = document.querySelector(".end");
 end.style.display = "none";//dont show death
 retry.style.display = "none";
@@ -96,6 +96,8 @@ function updateGameArea() {
         // console.log("speed of obstacle: "+myObstacles[i].y);
         if (myGamePiece.crashWith(myObstacles[i])) {
             end.style.display="block";
+            retry.style.display="block";
+            retry.addEventListener('click',function(){location.reload()});
             //retry.style.display="block";
             //retry.addEventListener('click',startGame);//function(){location.reload()}
             myGameArea.stop();
@@ -108,9 +110,9 @@ function updateGameArea() {
                     $.post('/api/leaderboardUpdate', play, function(result) { 
                         console.log(result);
                         // do retry button here
-                        retry.style.display="block";
-                        retry.style.top="100px";
-                        retry.addEventListener('click',startGame);//function(){location.reload()}
+                        // retry.style.display="block";
+                        // retry.style.top="100px";
+                        // retry.addEventListener('click',);//function(){location.reload()}
                     })
                 }
             })

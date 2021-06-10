@@ -17,6 +17,16 @@
   #wrongpass{
     display: none;
   }
+
+  .retry {
+    margin: 0;
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
   
   .game{
     position: relative;
@@ -60,9 +70,11 @@
   
   
    .end{
-    position: relative;
+    top: 0px;
+    left: 500px;
+    position: absolute;
     margin: auto;
-    width: 50%;
+    width: 300px;
     border: 3px;
     background-color: black;
     color:white;
