@@ -1,4 +1,4 @@
-// const playerdb = require('../db/playerdb');
+//Login the user
 const loginCtrl = (request, response, next) => {
 const loginServices = require('../services/userServices');
     let name = request.body.username;
@@ -9,7 +9,6 @@ const loginServices = require('../services/userServices');
         if (user === null) {
             console.log("Authentication problem!");
             response.json(null);
-            // location.reload();//if name is not given to us
         } else if(user === 0) {
             response.json(0);
         } else {
@@ -26,6 +25,8 @@ const loginServices = require('../services/userServices');
         next();
     });
 };
+
+//Register the user
 const registerCtrl = (request, response, next) => {
     const loginServices = require('../services/userServices');
 
@@ -38,14 +39,15 @@ const registerCtrl = (request, response, next) => {
             console.log("User insertion problem!");
             response.json(null);
         } else {
+            //here you should add the username to the session
             response.json(user);
-    //here you should add the username to the session
         }
         response.end();
         next();
     });
 };
 
+//Return details of all users
 const getUsers = (request, response) => {
     const loginServices = require('../services/userServices');
     loginServices.searchService(function(err, rows) {
@@ -54,7 +56,8 @@ const getUsers = (request, response) => {
     });
 };
 
-const leaderCtrl = (request, response) => {//get the scores
+//Update leaderboard with new score
+const leaderCtrl = (request, response) => {
     const loginServices = require('../services/userServices');
     let username = request.body.username;
     let score = request.body.score;
@@ -65,7 +68,8 @@ const leaderCtrl = (request, response) => {//get the scores
     });
 };
 
-const leaderScoreCtrl = (request, response) => {//get the no. of rows
+//Display top 5 players
+const leaderScoreCtrl = (request, response) => {
     const loginServices = require('../services/userServices');
     loginServices.displayService(function(err, rows) {
         response.json(rows);
@@ -73,12 +77,22 @@ const leaderScoreCtrl = (request, response) => {//get the no. of rows
     });
 };
 
-const score = (request, response) => {//get the no. of rows
+const getScore = (request, response) => {
+    const scoreServices = require('../services/userServices');
+    let username = request.body.username;
+
+    scoreServices.getScoreService(username, function(err, rows) {
+        response.json(rows);
+        response.end();
+    });
+};
+
+const checkScore = (request, response) => {
     const scoreServices = require('../services/userServices');
     let username = request.body.username;
     let score = request.body.score;
 
-    scoreServices.getScoreService(username, score, function(err, rows) {
+    scoreServices.checkScoreService(username, score, function(err, rows) {
         if (rows === null) {
             console.log("Their curent score is Greater than what they just got!");
             response.json(null);
@@ -101,10 +115,10 @@ const getUserByID = (request, response) => {
 module.exports = {
     loginCtrl,
     registerCtrl,
-    // getUserByUsername,
     getUsers,
     getUserByID,
     leaderCtrl,
     leaderScoreCtrl,
-    score
+    getScore,
+    checkScore
 };
