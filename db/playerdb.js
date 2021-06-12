@@ -51,15 +51,15 @@ function executeQuery(query, callback) {
 function getResult(query, callback) {
     executeQuery(query, function(err, rows) {
         if (!err) {
-            callback(null, rows);//[0].password);
+            callback(null, rows);
         } else {
             callback(true, err);
         }
     });
 }
 
-function find(callback) {
-    const selectUsers = "SELECT * from database.users; ";//database.user
+function allUsers(callback) {
+    const selectUsers = "SELECT * from database.users; ";
     getResult(selectUsers, function(err, rows) {
         if (!err) {
             callback(null, rows);
@@ -69,15 +69,17 @@ function find(callback) {
     });
 }
 
+//Return details of record if username found
 function findByUsername(username, callback) {
-    const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);//where like
+    const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, result) {
         if (!err) {
-            //User already exists
+            //User exists
             if (result.length != 0) {
                 if (result[0].name === username) {
                     callback(true, result);
                 }
+            //User doesn't exist
             } else {
                 callback(false, 0);
             }
@@ -87,17 +89,7 @@ function findByUsername(username, callback) {
     });
 }
 
-function findByUsernameLeader(username, callback) {
-    const selectUser = (SQL `SELECT * from database.leaderboard where username like ${username};`);
-    getResult(selectUser, function(err, rows) {
-        if (!err) {
-            callback(null, rows);
-        } else {
-            console.log(err);
-        }
-    });
-}
-
+//Return details of record by given id
 function findById(id, callback) {
     const selectUser = (SQL `SELECT * from database.users where id = ${id};`);
     getResult(selectUser, function(err, rows) {
@@ -109,12 +101,14 @@ function findById(id, callback) {
     });
 }
 
-function createUser(name, pass, callback) {//score
-    console.log('CREATE USER ; ' + name + ', ' + pass) //score
-    const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);//score
+//Insert new record in leaderboard with initial score '0'
+//Insert new record in database and return no. of rows affected
+function createUser(name, pass, callback) {
+    console.log('CREATE USER ; ' + name + ', ' + pass)
+    const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);
     getResult(insertBoard);
 
-    const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);//score
+    const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);
     getResult(insertUser, function(err, result) {
         if (!err) {
             callback(null, result.affectedRows, result.insertId);
@@ -124,11 +118,16 @@ function createUser(name, pass, callback) {//score
     });
 }
 
+//Delete new record in leaderboard with initial score '0'
+//Delete new record in database and return no. of rows affected
 function deleteUser(name, callback) {
-    const insertUser = (SQL `DELETE from database.users where name = ${name};`);
-    getResult(selectUser, function(err, result) {
+    const deleteBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);
+    getResult(deleteBoard);
+
+    const deletetUser = (SQL `DELETE from database.users where name = ${name};`);
+    getResult(deleteUser, function(err, result) {
         if (!err) {
-            console.log("Number of users inserted: " + result.affectedRows);
+            console.log("Number of users deleted: " + result.affectedRows);
             callback(null, result.affectedRows);
         } else {
             console.log(err);
@@ -136,31 +135,23 @@ function deleteUser(name, callback) {
     });
 }
 
-function updateScore(username, score, callback) {
-    const insertScore = (SQL `UPDATE database.leaderboard SET score=(${score}) WHERE name LIKE ${username} ;`);
-    getResult(insertScore, function(err, result) {
-        if (!err) {
-            callback(null, result);
-        } else {
-            console.log(err);
-        }
-    });
-}
-
+//
 function checkPass(username, password, callback) {
     const selectUser = (SQL `SELECT * from database.users WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, rows) {
         if (!err) {
             //User exists
             if (rows.length != 0) {
-                // pass is correct
+                //pass is correct
                 if (rows[0].pass === password) {
                     callback(null, rows);
                 } else {
+                    //password is incorrect -- return '0'
                     callback(false, 0);
                 }
             } else {
-                callback(false, null);//numberrrrrrssss
+                //user doesn't exist -- return null
+                callback(false, null);
             }
         } else {
             console.log(err);
@@ -168,6 +159,7 @@ function checkPass(username, password, callback) {
     });
 }
 
+//Return details of record(score) if username exists in leaderboard
 function getScore(username, callback) {
     const selectUser = (SQL `SELECT * from database.leaderboard WHERE name LIKE ${username};`);
     getResult(selectUser, function(err, rows) {
@@ -176,7 +168,8 @@ function getScore(username, callback) {
             if (rows.length != 0) {
                 callback(null, rows);
             } else {
-                callback(false, null);//numberrrrrrssss
+                //User doesn't exist in leaderboard --return null
+                callback(false, null);
             }
         } else {
             console.log(err);
@@ -184,6 +177,7 @@ function getScore(username, callback) {
     });
 }
 
+//Update leaderboard with new score
 function updateScore(username, score, callback) {
     const updateScore = (SQL `UPDATE database.leaderboard SET score = ${score} WHERE name = ${username} ;`);
     getResult(updateScore, function(err, result) {
@@ -195,7 +189,7 @@ function updateScore(username, score, callback) {
     });
 }
 
-
+//Return score of top 5 players by score in leaderboard
 function displayscores(callback) {
     const selectPlayer = (SQL `SELECT name,score FROM database.leaderboard ORDER BY score DESC LIMIT 5;`);
     getResult(selectPlayer, function(err, rows) {
@@ -208,13 +202,11 @@ function displayscores(callback) {
 }
 
 module.exports = {
-    find,
+    allUsers,
     findByUsername,
-    findByUsernameLeader,
     findById,
     createUser,
     deleteUser,
-    updateScore,
     checkPass,
     getScore,
     updateScore,
