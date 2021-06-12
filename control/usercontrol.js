@@ -77,6 +77,7 @@ const leaderScoreCtrl = (request, response) => {
     });
 };
 
+//Return score of given user
 const getScore = (request, response) => {
     const scoreServices = require('../services/userServices');
     let username = request.body.username;
@@ -87,6 +88,7 @@ const getScore = (request, response) => {
     });
 };
 
+//Return score of user if leaderBoard score less than new score
 const checkScore = (request, response) => {
     const scoreServices = require('../services/userServices');
     let username = request.body.username;
@@ -103,6 +105,7 @@ const checkScore = (request, response) => {
     });
 };
 
+//Return details of user by given id
 const getUserByID = (request, response) => {
     const loginServices = require('../services/userServices');
     let id = request.params.id;
