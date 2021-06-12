@@ -18,8 +18,11 @@ router.post('/api/leaderboard', usercontrol.leaderScoreCtrl);
 //create a route for /api/leaderboardUpdate
 router.post('/api/leaderboardUpdate', usercontrol.leaderCtrl);
 
-//create a route for /api/getScore
-router.post('/api/getScore', usercontrol.score);
+//create a route for /api/checkScore
+router.post('/api/getScore', usercontrol.getScore);
+
+//create a route for /api/checkScore
+router.post('/api/checkScore', usercontrol.checkScore);
 
 //export router
 module.exports = router;
