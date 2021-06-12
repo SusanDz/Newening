@@ -103,7 +103,7 @@ function updateGameArea() {
             myGameArea.stop();
             var play = {username:player, score:score };
             //another post api for checking if current score is greater than score stored
-            $.post('/api/getScore', play, function(result) {
+            $.post('/api/checkScore', play, function(result) {
                 console.log(result);
 
                 if(result != null){
