@@ -6,14 +6,16 @@ const loginService = (username, password, callback) => {
     //check if the user is in the DB
     playerdb.checkPass(username, password, function(err, rows) {
         if (rows === null) {
-            //the user is not in the DB
+            //the user is not in the DB -- return 0
             console.log("no  user found with this name");
             callback(true, 0);
         } 
         else if(rows == 0) {
+            //if password given is incorrect -- return null
             console.log("password is wrong lolll");
             callback(true, null);
         }else {
+            //if username and password match -- return the details
             console.log(`Selected user; ${rows[0].id}, ${rows[0].name}, ${rows[0].pass} `);
             user = {id:rows[0].id, username:rows[0].name, password:rows[0].pass};
             
@@ -25,19 +27,19 @@ const loginService = (username, password, callback) => {
 const registerService = (username, password, callback) => {
     playerdb.findByUsername(username, function(err, rowsuser) {
         if (rowsuser != 0) {
-            //already in db
+            //username already taken -- return null
             console.log("this username is already taken");
             callback(false, null);
         } else {
-            //insert in db
+            //username not taken then create a new user
             playerdb.createUser(username, password, function(err, count, id) {
                 if (count == 0) {
-                    //the user has not been inserted
+                    //the user has not been inserted -- return null
                     console.log("user has not been inserted");
                     callback(true, null);
                 } else {
+                    //user successfully created
                     console.log(`User has been inserted id= ${id}`);
-                    // user = {id:id, username:username, password:password, score:0};
                     user = new User(id, username, password);
                     callback(null, user);
                 }
@@ -47,23 +49,27 @@ const registerService = (username, password, callback) => {
 };
 
 const updateLeaderService = (username, score, callback) => {
-    console.log("already in");
+    //check if the user exists
     playerdb.findByUsername(username, function(err, result) {
         if (result.length == 0) {
             console.log("User doesn't exist in the database");
+            //User doesn't exist -- return '0'
             callback(false, 0);
         }
+        //if user exists update the user with the new score
         playerdb.updateScore(username, score, function(err, result) {
             if (result.length != 0) {
                 scores = new Score(username, score);
-                callback(null, scores);//numbers
+                callback(null, scores);
             } else {
+                //No record updated -- return null
                 callback(true, null);
             }
         });
     });
 };
 
+//return the top 5 user details in leaderboard
 const displayService = (callback) => {
     playerdb.displayscores(function(err, scoreData) {
         if (scoreData.rows != 0) {
@@ -74,8 +80,9 @@ const displayService = (callback) => {
     });
 };
 
+//Return details of all records in database
 const searchService = function(callback) {
-    playerdb.find(function(err, rows) {
+    playerdb.allUsers(function(err, rows) {
         if (rows.length == 0) {
             console.log("No users!");
         } else {
@@ -84,22 +91,34 @@ const searchService = function(callback) {
     });
 };
 
+//Return details of user by given id
 const searchIDService = function(id, callback) {
     playerdb.findById(id, function(err, rows) {
-        if (rows.length == 0) { //unkown
+        if (rows.length == 0) {
             console.log("Unknown user!");
             let user = null;
             callback(null, user);
         } else {
-
             let user = new User(rows[0].id, rows[0].name, rows[0].pass);
             callback(null, user);
         }
     });
 };
 
-const getScoreService = (username, score, callback) => {
-    console.log("already in");
+const getScoreService = (username,callback) => {
+    playerdb.findByUsername(username, function(err, result) {
+        if (result.length == 0) {
+            console.log("User doesn't exist in the database");
+            callback(false, 0);
+        }
+        playerdb.getScore(username, function(err, result) {
+            callback(null, result);
+
+        });
+    });
+};
+
+const checkScoreService = (username, score, callback) => {
     playerdb.findByUsername(username, function(err, result) {
         if (result.length == 0) {
             console.log("User doesn't exist in the database");
@@ -133,10 +152,11 @@ const deleteService = function(id, callback) {
 module.exports = {
     loginService,
     registerService,
+    updateLeaderService,
+    displayService,
     searchService,
     searchIDService,
-    updateLeaderService,
-    deleteService,
-    displayService,
-    getScoreService
+    getScoreService,
+    checkScoreService,
+    deleteService
 };
