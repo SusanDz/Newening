@@ -1,0 +1,70 @@
+h1 {
+    text-align: center;
+    font-size: 75px;
+    line-height: 100px;
+	color: #fcedd8;
+	background: #d52e3f;
+	font-family: 'Niconne', cursive;
+	font-weight: 700;
+    text-shadow: 5px 5px 0px #eb452b, 
+                  10px 10px 0px #efa032, 
+                  15px 15px 0px #46b59b, 
+                  20px 20px 0px #017e7f, 
+                  25px 25px 0px #052939
+}
+
+.back {
+    position: relative;
+    height: 50px;
+    top: 10px;
+    left: 10px;
+}
+
+body {
+    background-color: #d52e3f;
+
+}
+
+table {
+    border-radius: 25px;
+}
+
+.styled-table {
+    border-collapse: collapse; /*tighter*/
+    margin: 5% 35%; /*2 values= top&bottom, right&left*/
+    font-size: 0.9cm;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: #dddddd;
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    border-radius: 25px;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px; /*2 values= top&bottom, right&left*/
+}
+
+.styled-table tbody tr {
+    text-align: center;
+}
+
+.styled-table tbody tr td #0user {
+    text-align: center;
+    background-color: #efa032;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
