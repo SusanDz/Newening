@@ -105,12 +105,15 @@ const searchIDService = function(id, callback) {
     });
 };
 
+//Return score for given username
 const getScoreService = (username,callback) => {
+    //check if user exists
     playerdb.findByUsername(username, function(err, result) {
         if (result.length == 0) {
             console.log("User doesn't exist in the database");
             callback(false, 0);
         }
+        //return the details of the username in leaderboard
         playerdb.getScore(username, function(err, result) {
             callback(null, result);
 
@@ -118,6 +121,7 @@ const getScoreService = (username,callback) => {
     });
 };
 
+//Return record details if score in leaderboard is less than score user got just now from playing
 const checkScoreService = (username, score, callback) => {
     playerdb.findByUsername(username, function(err, result) {
         if (result.length == 0) {
@@ -138,9 +142,10 @@ const checkScoreService = (username, score, callback) => {
     });
 };
 
-const deleteService = function(id, callback) {
-    let count = playerdb.deleteUser(id, function(err, count) {
-        if (count === 0) { //unkown
+//Return true if user record is deleted
+const deleteService = function(username, callback) {
+    playerdb.deleteUser(username, function(err, count) {
+        if (count === 0) {
             console.log("No user deleted!");
             callback(null, false);
         } else {
