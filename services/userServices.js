@@ -48,6 +48,7 @@ const registerService = (username, password, callback) => {
     });
 };
 
+//Update user with new score
 const updateLeaderService = (username, score, callback) => {
     //check if the user exists
     playerdb.findByUsername(username, function(err, result) {
