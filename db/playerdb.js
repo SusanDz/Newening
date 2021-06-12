@@ -121,7 +121,7 @@ function createUser(name, pass, callback) {
 //Delete new record in leaderboard with initial score '0'
 //Delete new record in database and return no. of rows affected
 function deleteUser(name, callback) {
-    const deleteBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);
+    const deleteBoard = (SQL `DELETE from database.leaderboard where name = ${name};`);
     getResult(deleteBoard);
 
     const deletetUser = (SQL `DELETE from database.users where name = ${name};`);
