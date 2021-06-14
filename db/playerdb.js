@@ -106,7 +106,7 @@ function findById(id, callback) {
 function createUser(name, pass, callback) {
     console.log('CREATE USER ; ' + name + ', ' + pass)
     const insertBoard = (SQL `INSERT INTO database.leaderboard (name, score) VALUES (${name}, 0) ;`);
-    getResult(insertBoard);
+    getResult(insertBoard, function(err, result) {});
 
     const insertUser = (SQL `INSERT INTO database.users (name, pass) VALUES (${name}, ${pass}) ;`);
     getResult(insertUser, function(err, result) {
