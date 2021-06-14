@@ -5,9 +5,11 @@ var myBonus = [];
 var score  = parseInt(localStorage['score'] || '0', 10);
 // const startBoard = document.querySelector(".btn-grp button");
 const retry = document.querySelector(".retry");
+const goback = document.querySelector("a");
 const end = document.querySelector(".end");
 end.style.display = "none";//dont show death
 retry.style.display = "none";
+goback.style.display = "none";
 // startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
 var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
@@ -97,6 +99,7 @@ function updateGameArea() {
         if (myGamePiece.crashWith(myObstacles[i])) {
             end.style.display="block";
             retry.style.display="block";
+            goback.style.display="block";
             retry.addEventListener('click',function(){location.reload()});
             //retry.style.display="block";
             //retry.addEventListener('click',startGame);//function(){location.reload()}
