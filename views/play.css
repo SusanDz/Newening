@@ -22,10 +22,23 @@
     margin: 0;
     z-index: 10;
     position: absolute;
+    height: 50px;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+  }
+
+  a .goback{
+    position: absolute;
+    height: 40px;
+    top: 56%;
+    left: 46.3%;
+    width: 104px;
+  }
+
+  a .goback:active {
+    transform: translateY(4px);
   }
   
   .game{
