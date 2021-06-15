@@ -191,7 +191,7 @@ function updateScore(username, score, callback) {
 
 //Return score of top 5 players by score in leaderboard
 function displayscores(callback) {
-    const selectPlayer = (SQL `SELECT name,score FROM database.leaderboard ORDER BY score DESC LIMIT 5;`);
+    const selectPlayer = (SQL `SELECT name,score FROM database.leaderboard ORDER BY score DESC;`);
     getResult(selectPlayer, function(err, rows) {
         if (!err) {
             callback(null, rows);
