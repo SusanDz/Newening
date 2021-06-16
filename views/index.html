@@ -12,21 +12,27 @@
     </div>
     <div class= "btn-grp">
         <button id="b1" onclick="myFunction()">PLAY</button>
-        <button><a href="leaderboard.html">LEADERBOARD</a></button>
+        <button id="b2" onclick="myFunct()">LOGIN</button>
+        <button id="b3" onclick="myFunc()">LEADERBOARD</button>
     </div>
     <script>
         var player = sessionStorage.getItem("Player");
         var play = document.getElementById("b1");
+        var login = document.getElementById("b2");
+        var leader = document.getElementById("b3");
         console.log("Player: ",sessionStorage.getItem("Player"));
         function myFunction() {
             if(player === null){
-                // play.addEventListener('click',location.href='play.html');
                 play.addEventListener('click',location.href='login.html');
             } else {
-                // play.addEventListener('click',location.href='login.html');
                 play.addEventListener('click',location.href='play.html');
-                // console.log("HELLOOOO!!!")
             }
+        }
+        function myFunct() {
+            login.addEventListener('click',location.href='login.html');
+        }
+        function myFunc() {
+            leader.addEventListener('click',location.href='leaderboard.html');
         }
     </script>
 </body>
