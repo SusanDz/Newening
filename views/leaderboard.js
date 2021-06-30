@@ -26,10 +26,12 @@ function init() {
                     i++;
 
                 }
-                if(num != null) {
-                    document.getElementById(num).bgColor = 'orange';
-                } else {
-                    document.getElementById('5').bgColor = 'orange';
+                if(player != null) {
+                    if(num != null) {
+                        document.getElementById(num).bgColor = 'orange';
+                    } else {
+                        document.getElementById('5').bgColor = 'orange';
+                    }
                 }
             })
             .fail(function() {
