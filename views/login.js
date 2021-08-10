@@ -10,16 +10,21 @@ function init() {
             var user = {username:name, password:pass };//username is attribute
             console.log(name + "'" + pass);
             console.log("meow");
+            console.log(!name.match(lowerCaseLetters));
             
-            if(pass.match(upperCaseLetters) && pass.match(lowerCaseLetters) && pass.match(numbers) && pass.length>=8) {
+            if(pass.match(upperCaseLetters) && pass.match(lowerCaseLetters) && pass.match(numbers) && pass.length>=8 && name.match(lowerCaseLetters)) {
                 $.post('/api/register', user, function(result) {
                     //allow access to game using dollar get index html 
                     console.log(result);
-                    $("#wrongpass h2").html("Username already Exists");
+
+                    $("#wrongpass").html("Username already Exists");
                     if(result == null) {
-                        document.getElementById("wrongpass").style.display = "block";
+                        document.getElementById("myModal").style.display = "block";
+                        // document.getElementById("wrongpass").style.display = "block";
+                        // document.getElementById("guidelines").style.display = "block";
                     }
                     if(result != null) {
+                        document.getElementById("myModal").style.display = "none";
                         document.getElementById("wrongpass").style.display = "none";
                         sessionStorage.setItem("Player", name);
                         location.replace("play.html");
@@ -31,9 +36,18 @@ function init() {
                     console.log("error with registration");
                  // location.replace("index.html");
                 });
+            } else if(!name.match(lowerCaseLetters)){
+                $("#wrongpass").html("Username field is empty");
+                document.getElementById("myModal").style.display = "block";
+                document.getElementById("guidelines").style.display = "none";
             } else {
-                $("#wrongpass h2").html("Password doesn't follow the Guidelines");
-                document.getElementById("wrongpass").style.display = "block";
+                console.log("guide");
+                $("#wrongpass").html("Password doesn't follow the Guidelines");
+                document.getElementById("guidelines").style.display = "block";
+                //wrongpass also?
+                document.getElementById("myModal").style.display = "block";
+                var modal = document.getElementById("myModal");
+                // When the user clicks anywhere outside of the modal, close it
             }
 
         }),
@@ -46,12 +60,16 @@ function init() {
                 console.log(result);
                 console.log('Welcome back', name);
                 if(result == null) {
-                    document.getElementById("wrongpass").style.display = "block";
+                    //wrong password
+                    $("#wrongpass").html("Incorrect Password");
+                    document.getElementById("myModal").style.display = "block";
+                    document.getElementById("guidelines").style.display = "block";
                 } else if(result == 0) {
-                    $("#wrongpass h2").html("Username doesn't Exist");
-                    document.getElementById("wrongpass").style.display = "block";
+                    $("#wrongpass").html("Username doesn't Exist");
+                    document.getElementById("myModal").style.display = "block";
+                    document.getElementById("guidelines").style.display = "none";
                 } else {
-                    document.getElementById("wrongpass").style.display = "none";
+                    document.getElementById("myModal").style.display = "none";
                     sessionStorage.setItem("Player", name);
                     location.replace("play.html");
                 }
