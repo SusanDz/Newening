@@ -15,7 +15,7 @@ var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
 
 function startGame() {
-    myGamePiece = new component(120, 210, "santa.png", 604, 450, "image");
+    myGamePiece = new component(120, 210, "orange", 604, 410, "imag");
     myBackground = new component(1366, 657, "night.jpg", 0, 0, "image");
     myGameArea.start();
     // document.querySelector(".btn-grp button").style.visibility = 'hidden';
@@ -142,8 +142,8 @@ function updateGameArea() {
     if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 5; }
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(50)) {
-        myObstacles.push(new component(50, 50, "gift.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
-        myBonus.push(new component(50, 50, "santa.gif",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
+        myObstacles.push(new component(40, 100, "firecracker.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
+        myBonus.push(new component(30, 30, "gift.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
     }
     
     myBackground.newPos();    
@@ -183,8 +183,8 @@ function advance(){
 
 function produce(intvl, speed){
     if (myGameArea.frameNo == 1 || everyinterval(intvl)) {
-        myObstacles.push(new component(50, 50, "gift.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
-        myBonus.push(new component(50, 50, "santa.gif",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
+        myObstacles.push(new component(40, 100, "firecracker.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
+        myBonus.push(new component(30, 30, "gift.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].y += speed;
