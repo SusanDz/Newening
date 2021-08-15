@@ -3,14 +3,16 @@ var myBackground;
 var myObstacles = [];
 var myBonus = [];
 var score  = parseInt(localStorage['score'] || '0', 10);
-// const startBoard = document.querySelector(".btn-grp button");
+
 const retry = document.querySelector(".retry");
 const goback = document.querySelector("a");
 const end = document.querySelector(".end");
-end.style.display = "none";//dont show death
+
+//Hide death and retry, goback buttons
+end.style.display = "none";
 retry.style.display = "none";
 goback.style.display = "none";
-// startBoard.addEventListener("click", startGame);//in index.html press play and game page starts
+
 var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
 
@@ -18,8 +20,6 @@ function startGame() {
     myGamePiece = new component(120, 210, "orange", 604, 410, "imag");
     myBackground = new component(1366, 657, "night.jpg", 0, 0, "image");
     myGameArea.start();
-    // document.querySelector(".btn-grp button").style.visibility = 'hidden';
-    // document.querySelector("#heading").style.visibility = 'hidden';//once game loads hide the button and the heading initially
 }
 
 var myGameArea = {
@@ -47,7 +47,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type) {//added speedx and speedy
+function component(width, height, color, x, y, type) {
     this.type = type;
     if (type == "image") {
         this.image = new Image();
@@ -66,10 +66,10 @@ function component(width, height, color, x, y, type) {//added speedx and speedy
             ctx.drawImage(this.image, 
                 this.x, 
                 this.y,
-                this.width, this.height);//added speed here
+                this.width, this.height);
         } else {
             ctx.fillStyle = color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);//added speed here
+            ctx.fillRect(this.x, this.y, this.width, this.height);
         }
     }
     this.newPos = function() {
@@ -95,28 +95,20 @@ function component(width, height, color, x, y, type) {//added speedx and speedy
 
 function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
-        // console.log("speed of obstacle: "+myObstacles[i].y);
+        
         if (myGamePiece.crashWith(myObstacles[i])) {
             end.style.display="block";
             retry.style.display="block";
             goback.style.display="block";
             retry.addEventListener('click',function(){location.reload()});
-            //retry.style.display="block";
-            //retry.addEventListener('click',startGame);//function(){location.reload()}
+            
             myGameArea.stop();
             var play = {username:player, score:score };
-            //another post api for checking if current score is greater than score stored
+            //Post api for checking if current score is greater than score stored
             $.post('/api/checkScore', play, function(result) {
-                console.log(result);
 
                 if(result != null){
-                    $.post('/api/leaderboardUpdate', play, function(result) { 
-                        console.log(result);
-                        // do retry button here
-                        // retry.style.display="block";
-                        // retry.style.top="100px";
-                        // retry.addEventListener('click',);//function(){location.reload()}
-                    })
+                    $.post('/api/leaderboardUpdate', play)
                 }
             })
             return;
@@ -136,10 +128,9 @@ function updateGameArea() {
     myGameArea.clear();
     myGamePiece.speedX = 0;
     myGamePiece.speedY = 0;    
-    if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.speedX = -5; }
-    if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedX = 5; }
-    if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedY = -5; }
-    if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedY = 5; }
+    if (myGameArea.keys && myGameArea.keys[37] && myGamePiece.x!=-1) {myGamePiece.speedX = -5; }
+    if (myGameArea.keys && myGameArea.keys[39] && myGamePiece.x!=1249) {myGamePiece.speedX = 5; }
+    
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(50)) {
         myObstacles.push(new component(40, 100, "firecracker.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
@@ -159,12 +150,6 @@ function updateGameArea() {
         myBonus[i].update();
     }
 }
-
-// for (i = 0; i < myObstacles.length; i += 1) {
-//     if (myGamePiece.crashWith(myObstacles[i])){
-//         end.style.display="block";
-//     }
-// }
 
 function advance(){
     if((score>20)&&(score<=40)){
