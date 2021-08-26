@@ -2,16 +2,22 @@ var myGamePiece;
 var myBackground;
 var myObstacles = [];
 var myBonus = [];
+var inte;
 var score  = parseInt(localStorage['score'] || '0', 10);
 
 const retry = document.querySelector(".retry");
 const goback = document.querySelector("a");
 const end = document.querySelector(".end");
+const pause = document.querySelector(".pause");
+const play = document.querySelector(".play");
 
 //Hide death and retry, goback buttons
 end.style.display = "none";
 retry.style.display = "none";
 goback.style.display = "none";
+
+pause.addEventListener('click',function(){clearInterval(inte);});
+play.addEventListener('click',function(){inte = setInterval(updateGameArea, 20);});
 
 var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
@@ -30,7 +36,7 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        inte = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function (e) {
             myGameArea.keys = (myGameArea.keys || []);
             myGameArea.keys[e.keyCode] = (e.type == "keydown");
@@ -63,10 +69,7 @@ function component(width, height, color, x, y, type) {
     this.update = function() {
         ctx = myGameArea.context;
         if (type == "image") {
-            ctx.drawImage(this.image, 
-                this.x, 
-                this.y,
-                this.width, this.height);
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         } else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -86,7 +89,7 @@ function component(width, height, color, x, y, type) {
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
         var crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright-30 < otherleft) || (myleft+20 > otherright)) {
             crash = false;// +25 -50 +15
         }
         return crash;
