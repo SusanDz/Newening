@@ -62,8 +62,7 @@ function component(width, height, color, x, y, type) {
     this.width = width;
     this.height = height;
     this.speedX = 0;
-    this.speedY = 0;
-    //this.score = 0;    
+    this.speedY = 0;   
     this.x = x;
     this.y = y;    
     this.update = function() {
@@ -90,7 +89,7 @@ function component(width, height, color, x, y, type) {
         var otherbottom = otherobj.y + (otherobj.height);
         var crash = true;
         if ((mybottom < othertop) || (mytop > otherbottom) || (myright-30 < otherleft) || (myleft+20 > otherright)) {
-            crash = false;// +25 -50 +15
+            crash = false;
         }
         return crash;
     }
