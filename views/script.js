@@ -136,8 +136,8 @@ function updateGameArea() {
     
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(50)) {
-        myObstacles.push(new component(40, 100, "firecracker.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
-        myBonus.push(new component(30, 30, "gift.png",  Math.random() * (myGameArea.canvas.width - 200), 15 + Math.random() * 30, "image"));
+        myObstacles.push(new component(40, 100, "firecracker.png",  Math.random() * (myGameArea.canvas.width - 40), 15 + Math.random() * 30, "image"));
+        myBonus.push(new component(30, 30, "gift.png",  Math.random() * (myGameArea.canvas.width - 30), 15 + Math.random() * 30, "image"));
     }
     
     myBackground.newPos();    
