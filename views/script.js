@@ -23,7 +23,7 @@ var player = sessionStorage.getItem("Player");
 console.log("Hi ", player);
 
 function startGame() {
-    myGamePiece = new component(120, 210, "orange", 604, 410, "imag");
+    myGamePiece = new component(120, 210, "santa.png", 604, 440, "image");
     myBackground = new component(1366, 657, "night.jpg", 0, 0, "image");
     myGameArea.start();
 }
