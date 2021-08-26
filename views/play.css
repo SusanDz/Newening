@@ -6,12 +6,32 @@
   body{
     overflow-x: hidden; /*prevents horizontal scrolling(applicable to the default web browser zoom level)*/
     overflow-y: hidden; 
-    /* background-image: url('night.jpg'); */
-    /* background-color: black; */
   }
   
   #container{
     position: relative;
+  }
+
+  .pause {
+    margin: 0;
+    z-index: 10;
+    position: absolute;
+    height: 50px;
+    top: 30px;
+    left: 40px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .play {
+    margin: 0;
+    z-index: 10;
+    position: absolute;
+    height: 40px;
+    top: 28px;
+    left: 20px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 
   .retry {
