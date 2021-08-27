@@ -11,11 +11,11 @@ var pool = mysql.createPool({
 });
 // //for when the server disconnects
 // pool.query('select 1 + 1', (err, rows) => { /* */ });
-pool.query('SELECT 1 + 1', function(err, rows) {
-    if (err) throw err;
+// pool.query('SELECT 1 + 1', function(err, rows) {
+//     if (err) throw err;
   
-    console.log('The solution is: ', rows[0].solution);
-  });//try this laterrrrrrrrrrrr
+//     console.log('The solution is: ', rows[0].solution);
+//   });//try this laterrrrrrrrrrrr
 
 // Attempt to catch disconnects 
 pool.on('connection', function(connection) {
